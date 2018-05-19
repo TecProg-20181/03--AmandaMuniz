@@ -4,6 +4,9 @@ import string
 WORDLIST_FILENAME = "words.txt"
 
 class Word():
+    """
+    Essa classe lida com o arquivo de palavras e escolhe a palavra.
+    """
     def __init__(self):
         self.wordlist = ""
         self.secretword = ""
@@ -12,6 +15,10 @@ class Word():
         self.line = ""
 
     def changeword(self):
+        """
+        Essa funcao muda a palavra se o numero de letras diferentes
+        presentes nela e maior que o numero de jogadas.
+        """
         while True:
             self.secretword = random.choice(self.wordlist).lower()
             if self.guess.letters <= self.guess.guesses:
@@ -34,6 +41,10 @@ class Word():
         return self.changeword()
 
 class Guess():
+    """
+    Essa classe lida com o jogo em si. Nela estao presentes todas as
+    funcoes que manipulam a palavra escolhida.
+    """
     def __init__(self, secretword):
         self.secretword = secretword
         self.lettersguessed = []
@@ -43,7 +54,10 @@ class Guess():
         self.letters = 0
 
     def iswordguessed(self):
-
+        """
+        Essa funcao verifica se a letra ja foi escolhida e se
+        esta presente na palavra secreta.
+        """
         for letter in self.secretword:
             if letter in self.lettersguessed:
                 pass
@@ -53,21 +67,31 @@ class Guess():
         return True
 
     def getguessedword(self):
-
+        """
+        Funcao get para pegar a palavra adivinhada.
+        """
         return self.guessed
 
     def getavailableletters(self):
-
+        """
+        Funcao get para as letras disponiveis no jogo.
+        """
         return self.available
 
     def getlettersofword(self):
+        """
+        Funcao para pegar o numero de letras diferentes
+        na palavra secreta.
+        """
         for letter in self.available:
             if letter in self.secretword:
                 self.letters += 1
         return self.letters
 
     def hangman(self):
-
+        """
+        Funcao main do jogo.
+        """
         print 'Welcome to the game, Hangam!'
         print 'I am thinking of a word that is', len(self.secretword), ' letters long.'
         print '-------------'
@@ -113,9 +137,12 @@ class Guess():
                         self.guessed += letter
                     else:
                         self.guessed += '_ '
+                        print '\n'
+
 
                 print 'Oops! That letter is not in my word: ', self.guessed
             print '------------'
+            print '\n'
 
         else:
             if self.iswordguessed() == True:
