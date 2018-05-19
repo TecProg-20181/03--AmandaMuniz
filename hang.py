@@ -5,9 +5,18 @@ WORDLIST_FILENAME = "words.txt"
 
 class Word():
     def __init__(self):
+        self.wordlist = ""
+        self.secretword = ""
+        self.guess = Guess(self.secretword)
         self.infile = ""
         self.line = ""
-        self.wordlist = ""
+
+    def changeword(self):
+        while True:
+            self.secretword = random.choice(self.wordlist).lower()
+            if self.guess.letters <= self.guess.guesses:
+                break
+        return self.secretword
 
     def loadwords(self):
         """
@@ -22,12 +31,11 @@ class Word():
         # wordlist: list of strings
         self.wordlist = string.split(self.line)
         print "  ", len(self.wordlist), "words loaded."
-        return random.choice(self.wordlist)
+        return self.changeword()
 
 class Guess():
-    def __init__(self):
-        self.word = Word()
-        self.secretword = self.word.loadwords().lower()
+    def __init__(self, secretword):
+        self.secretword = secretword
         self.lettersguessed = []
         self.guessed = ''
         self.available = string.ascii_lowercase
@@ -115,5 +123,7 @@ class Guess():
             else:
                 print 'Sorry, you ran out of guesses. The word was ', self.secretword, '.'
 
-guess = Guess()
+word = Word()
+secretword = word.loadwords().lower()
+guess = Guess(secretword)
 guess.hangman()
