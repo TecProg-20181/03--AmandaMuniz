@@ -93,14 +93,20 @@ class Guess():
             break
         return self.secretword
 
-    def hangman(self):
+    def initialmenu(self):
         """
-        Funcao main do jogo.
+        Menu inicial do jogo.
         """
         print 'Welcome to the game, Hangam!'
         print 'I am thinking of a word that is', len(self.secretword), ' letters long.'
         print '-------------'
         print 'The word has ', self.getlettersofword(), 'differents letters.'
+
+    def hangman(self):
+        """
+        Funcao main do jogo.
+        """
+        self.initialmenu()
 
         if self.getlettersofword() > 8:
             self.changeword()
