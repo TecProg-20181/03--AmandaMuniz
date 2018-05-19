@@ -1,3 +1,7 @@
+"""
+Codigo para jogo da forca.
+Refatorado por Amanda Muniz.
+"""
 import random
 import string
 
@@ -9,21 +13,8 @@ class Word():
     """
     def __init__(self):
         self.wordlist = ""
-        self.secretword = ""
-        self.guess = Guess(self.secretword)
         self.infile = ""
         self.line = ""
-
-    def changeword(self):
-        """
-        Essa funcao muda a palavra se o numero de letras diferentes
-        presentes nela e maior que o numero de jogadas.
-        """
-        while True:
-            self.secretword = random.choice(self.wordlist).lower()
-            if self.guess.letters <= self.guess.guesses:
-                break
-        return self.secretword
 
     def loadwords(self):
         """
@@ -38,7 +29,7 @@ class Word():
         # wordlist: list of strings
         self.wordlist = string.split(self.line)
         print "  ", len(self.wordlist), "words loaded."
-        return self.changeword()
+        return random.choice(self.wordlist).lower()
 
 class Guess():
     """
@@ -46,6 +37,7 @@ class Guess():
     funcoes que manipulam a palavra escolhida.
     """
     def __init__(self, secretword):
+        self.word = Word()
         self.secretword = secretword
         self.lettersguessed = []
         self.guessed = ''
@@ -88,6 +80,19 @@ class Guess():
                 self.letters += 1
         return self.letters
 
+    def changeword(self):
+        """
+        Essa funcao muda a palavra se o numero de letras diferentes
+        presentes nela e maior que o numero de jogadas.
+        """
+        while self.getlettersofword() > 8:
+            print 'This word is too big for this game'
+            self.secretword = self.word.loadwords()
+            if self.letters <= self.guesses:
+                break
+            break
+        return self.secretword
+
     def hangman(self):
         """
         Funcao main do jogo.
@@ -96,6 +101,10 @@ class Guess():
         print 'I am thinking of a word that is', len(self.secretword), ' letters long.'
         print '-------------'
         print 'The word has ', self.getlettersofword(), 'differents letters.'
+
+        if self.getlettersofword() > 8:
+            self.changeword()
+
         while self.iswordguessed() == False and self.guesses > 0:
             print 'You have ', self.guesses, 'guesses left.'
 
