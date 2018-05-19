@@ -25,8 +25,9 @@ class Word():
         return random.choice(self.wordlist)
 
 class Guess():
-    def __init__(self, secretword):
-        self.secretword = secretword
+    def __init__(self):
+        self.word = Word()
+        self.secretword = self.word.loadwords().lower()
         self.lettersguessed = []
         self.guessed = ''
         self.available = string.ascii_lowercase
@@ -114,9 +115,5 @@ class Guess():
             else:
                 print 'Sorry, you ran out of guesses. The word was ', self.secretword, '.'
 
-
-
-word = Word()
-secretword = word.loadwords().lower()
-guess = Guess(secretword)
+guess = Guess()
 guess.hangman()
