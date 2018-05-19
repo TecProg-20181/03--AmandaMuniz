@@ -31,7 +31,7 @@ class Guess():
         self.guessed = ''
         self.available = string.ascii_lowercase
         self.guesses = 8
-
+        self.letters = 0
 
     def iswordguessed(self):
 
@@ -51,13 +51,19 @@ class Guess():
 
         return self.available
 
+    def getlettersofword(self):
+        for letter in self.available:
+            if letter in self.secretword:
+                self.letters += 1
+        return self.letters
+
     def hangman(self):
 
         print 'Welcome to the game, Hangam!'
         print 'I am thinking of a word that is', len(self.secretword), ' letters long.'
         print '-------------'
-
-        while self.iswordguessed() == False and self.guesses >0:
+        print 'The word has ', self.getlettersofword(), 'differents letters.'
+        while self.iswordguessed() == False and self.guesses > 0:
             print 'You have ', self.guesses, 'guesses left.'
 
             self.available = self.getavailableletters()
