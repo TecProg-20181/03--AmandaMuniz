@@ -4,6 +4,7 @@ Refatorado por Amanda Muniz.
 """
 import random
 import string
+import sys
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -23,7 +24,11 @@ class Word():
         """
         print "Loading word list from file..."
         # inFile: file
-        self.infile = open(WORDLIST_FILENAME, 'r', 0)
+        try:
+            self.infile = open(WORDLIST_FILENAME, 'r', 0)
+        except FileNotFoundError:
+            print'Sorry, the file cant be found'
+            sys.exit()
         # line: string
         self.line = self.infile.readline()
         # wordlist: list of strings
